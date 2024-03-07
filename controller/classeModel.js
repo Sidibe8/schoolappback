@@ -160,7 +160,7 @@ exports.getProfesseursByClasse = async (req, res) => {
     .populate({
       path: 'matieres',
       select: 'nom', // Sélectionnez les champs que vous souhaitez afficher de la matière
-    });;
+    });
 
     if (!professeurs) {
       return res.status(404).json({ message: 'Aucun enseignant trouvé pour cette classe.' });
@@ -182,10 +182,10 @@ exports.deleteClasseWithRelatedData = async (req, res) => {
     await EleveModel.deleteMany({ classe: classeId });
 
     // Supprimer les professeurs associés à la classe
-    await ProfesseurModel.updateMany(
-      { $pull: { classes: classeId } },
-      { multi: true }
-    );
+    // await ProfesseurModel.updateMany(
+    //   { $pull: { classes: classeId } },
+    //   { multi: true }
+    // );
 
     // Supprimer la classe elle-même
     const classe = await ClasseModel.findByIdAndDelete(classeId);

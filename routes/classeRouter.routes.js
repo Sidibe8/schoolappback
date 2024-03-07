@@ -20,7 +20,8 @@ router.delete('/classe/:id/delete-coef', classeController.deleteCoef);
 
 
 // delete classes by id 
-router.delete('/classes/:id', classeController.deleteClasseById);
+router.delete('/classes/:id', classeController.deleteClasseWithRelatedData);
+// router.delete('/classes/:id', classeController.deleteClasseById);
 
 router.get('/eleves/classe/:classeId', classeController.getElevesByClasse);
 // Route pour récupérer tous les enseignants d'une classe

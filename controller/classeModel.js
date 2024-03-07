@@ -176,10 +176,12 @@ exports.getProfesseursByClasse = async (req, res) => {
 // Supprimer une classe avec les élèves et les professeurs associés
 exports.deleteClasseWithRelatedData = async (req, res) => {
   try {
-    const { classeId } = req.params;
+    // const { classeId } = req.params;
+
+    // console.log('ts', req.params.id)
 
     // Supprimer les élèves de la classe
-    await EleveModel.deleteMany({ classe: classeId });
+    await EleveModel.deleteMany({ classe: req.params.id });
 
     // Supprimer les professeurs associés à la classe
     // await ProfesseurModel.updateMany(
@@ -188,15 +190,15 @@ exports.deleteClasseWithRelatedData = async (req, res) => {
     // );
 
     // Supprimer la classe elle-même
-    const classe = await ClasseModel.findByIdAndDelete(classeId);
+    const classe = await ClasseModel.findByIdAndDelete(req.params.id);
 
     if (!classe) {
-      return res.status(404).send();
+      return res.status(404).json({message: "Classe not found"});
     }
 
     res.send(classe);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({message: 'Error:',error});
   }
 };
 
